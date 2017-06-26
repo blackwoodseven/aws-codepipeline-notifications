@@ -1,5 +1,7 @@
 /* global chrome */
 
+// aux functions
+
 const preatyTime = () => {
   const now = new Date()
   return now.getHours() + ':' + ((now.getMinutes() <= 9) ? '0' + now.getMinutes() : now.getMinutes())
@@ -16,6 +18,8 @@ const createNotification = (urlAsId, title, iconUrl, message, requireInteraction
     requireInteraction,
     priority
   })
+
+// diferent notification creators
 
 const showNoPipesDefinedNotification = () =>
   createNotification(
@@ -68,6 +72,8 @@ const showLoggedOutNotification = () => {
     `Cant retrive the pipeline status. Most probable because you are logged out.\nIf you are logged it is probable that AWS changed something on the responses.. you will have to debug.`)
   openPage(url)
 }
+
+// on click notifications handlers
 
 const openPage = (urlAsNotificationId) => {
   if (urlAsNotificationId.indexOf('aws.amazon.com') !== -1) {
