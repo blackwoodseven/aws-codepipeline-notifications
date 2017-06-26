@@ -15,8 +15,8 @@ window.addEventListener('load', function () {
   options.isActivated.checked = JSON.parse(localStorage.isActivated) // The display activation.
   options.frequency.value = localStorage.frequency // The display frequency, in minutes.
   const setTypeOfNotifInput = (localStorage, options) => {
-    options.onlyFailures.checked = (localStorage.typeOfNotif === 'onlyFailures')
-    options.failuresSuccesses.checked = (localStorage.typeOfNotif === 'failuresSuccesses')
+    options.onlyFailed.checked = (localStorage.typeOfNotif === 'onlyFailed')
+    options.failedAndSucceeded.checked = (localStorage.typeOfNotif === 'failedAndSucceeded')
     options.all.checked = (localStorage.typeOfNotif === 'all')
   }
   setTypeOfNotifInput(localStorage, options)
@@ -42,12 +42,12 @@ window.addEventListener('load', function () {
     localStorage.frequency = options.frequency.value
   }
 
-  options.onlyFailures.onchange = function () {
-    localStorage.typeOfNotif = options.onlyFailures.value
+  options.onlyFailed.onchange = function () {
+    localStorage.typeOfNotif = options.onlyFailed.value
     setTypeOfNotifInput(localStorage, options)
   }
-  options.failuresSuccesses.onchange = function () {
-    localStorage.typeOfNotif = options.failuresSuccesses.value
+  options.failedAndSucceeded.onchange = function () {
+    localStorage.typeOfNotif = options.failedAndSucceeded.value
     setTypeOfNotifInput(localStorage, options)
   }
   options.all.onchange = function () {

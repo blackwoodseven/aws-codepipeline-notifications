@@ -14,10 +14,7 @@ var optionAnchor = document.getElementById('optionAnchor')
 optionAnchor.onclick = () => goToTab(chrome.runtime.getURL('options/index.html'))
 
 var refreshAnchor = document.getElementById('refreshAnchor')
-refreshAnchor.onclick = () => {
-  console.log('test refreshAnchor')
-  chrome.runtime.reload()
-}
+refreshAnchor.onclick = () => chrome.runtime.reload()
 
 var content = document.getElementById('content')
 if (JSON.parse(localStorage.isActivated)) {

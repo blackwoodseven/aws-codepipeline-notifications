@@ -1,4 +1,4 @@
-/* global chrome */
+/* global chrome CONSTS */
 
 // aux functions
 
@@ -40,28 +40,21 @@ const showPipelineNotification = (pipelineName, stageName, status, typeOfNotif) 
   var requireInteraction = false
   var priority = 0
   var now = new Date()
-  if (status === 'Succeeded') icon = '../img/success.png'
-  else if (status === 'InProgress') icon = '../img/progress.png'
-  else if (status === 'Failed') {
+  if (status === CONSTS.pipelineStateState.succeeded) icon = '../img/success.png'
+  else if (status === CONSTS.pipelineStateState.inProgress) icon = '../img/progress.png'
+  else if (status === CONSTS.pipelineStateState.failed) {
     icon = '../img/failure.png'
     requireInteraction = true
     priority = 2
   }
 
-  if (typeOfNotif === 'all' ||
-     (typeOfNotif === 'failuresSuccesses' && (status === 'Succeeded' || status === 'Failed')) ||
-     (typeOfNotif === 'onlyFailures' && status === 'Failed')) {
-    console.info(`Notification... ${pipelineName} - ${preatyTime()} // Stage: ${stageName}\nStatus: ${status}`)
-    createNotification(
+  createNotification(
       `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}-${now.getTime()}`,
       `${pipelineName} - ${preatyTime()}`,
       icon,
       `Stage: ${stageName}\nStatus: ${status}`,
       requireInteraction,
       priority)
-  } else {
-    console.info(`Sillent notification... ${pipelineName} - ${preatyTime()} // Stage: ${stageName}\nStatus: ${status}`)
-  }
 }
 
 const showPipelineStructureChangeNotification = (pipelineName) =>

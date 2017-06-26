@@ -1,4 +1,4 @@
-/* global chrome localStorage getPipelineState showNoPipesDefinedNotification showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ */
+/* global chrome localStorage getPipelineState showNoPipesDefinedNotification showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ CONSTS */
 
 const backgroundFn = () => {
   // Conditionally initialize the options.
@@ -6,7 +6,7 @@ const backgroundFn = () => {
     localStorage.isActivated = true
     localStorage.frequency = 1        // The display frequency, in minutes.
     localStorage.pipelines = '{}'
-    localStorage.typeOfNotif = 'all'
+    localStorage.typeOfNotif = CONSTS.typeOfNotif.all
     localStorage.isInitialized = true // The option initialization.
   }
 
@@ -58,7 +58,18 @@ const backgroundFn = () => {
 
               newPipelineState.stageStates.forEach((pipelineStageNewState, index) => {
                 if (!_.isEqual(pipelineOldState.stageStates[index], pipelineStageNewState)) {
-                  showPipelineNotification(pipelineName, pipelineStageNewState.stageName, pipelineStageNewState.latestExecution.status, localStorage.typeOfNotif)
+                  const typeOfNotif = localStorage.typeOfNotif
+                  const status = pipelineStageNewState.latestExecution.status
+                  const stageName = pipelineStageNewState.stageName
+
+                  if (typeOfNotif === CONSTS.typeOfNotif.all ||
+                    (typeOfNotif === CONSTS.typeOfNotif.failedAndSucceeded && (status === CONSTS.pipelineStateState.succeeded || status === CONSTS.pipelineStateState.failed)) ||
+                    (typeOfNotif === CONSTS.typeOfNotif.onlyFailed && status === CONSTS.pipelineStateState.failed)) {
+                    console.info(`Notification... ${pipelineName} // Stage: ${stageName}\nStatus: ${status}`)
+                    showPipelineNotification(pipelineName, stageName, status)
+                  } else {
+                    console.info(`Sillent notification... ${pipelineName} // Stage: ${stageName}\nStatus: ${status}`)
+                  }
                 }
               })
             }
