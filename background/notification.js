@@ -36,7 +36,6 @@ const showExtentionStartNotification = (pipelines, frequency) =>
     `The extention has started looking for changes to the pipelines:\n${pipelines}\n @ a frequency of ${frequency} minutes.`)
 
 const showPipelineNotification = (pipelineName, stageName, status) => {
-  debugger
   var icon = ''
   var requireInteraction = false
   var priority = 0
