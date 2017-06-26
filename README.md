@@ -1,7 +1,7 @@
 # aws-codepipeline-notifications
 
 This is a simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification
-
+-- NOT A PRODUCT FROM AWS, USE AT YOUR OWN EXPENSE.
 
 How to install?
 ---------------
