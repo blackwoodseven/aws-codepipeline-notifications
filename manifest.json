@@ -2,7 +2,7 @@
   "name": "Pipeline Notification",
   "version": "1.1",
   "description":
-    "This is a super simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification",
+    "This is a simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification",
   "icons": {"16": "img/16.png", "48": "img/48.png", "128": "img/128.png"},
   "permissions": [
     "notifications",
