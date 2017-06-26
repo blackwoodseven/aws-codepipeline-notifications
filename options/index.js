@@ -1,7 +1,10 @@
-/* global options localStorage */
+/* global options localStorage chrome */
 
 function ghost (isDeactivated) {
-  // Grays out or [whatever the opposite of graying out is called] the option field.
+  if (isDeactivated) chrome.browserAction.setIcon({path: '/img/48grey.png'})
+  else chrome.browserAction.setIcon({path: '/img/48.png'})
+
+  // Grays out or put back the collor the option field.
   options.style.color = isDeactivated ? 'graytext' : 'black' // The label color.
   options.frequency.disabled = isDeactivated // The control manipulability.
   options.pipelines.disabled = isDeactivated // The control manipulability.
@@ -20,7 +23,7 @@ window.addEventListener('load', function () {
     options.pipelines.value = pipelines
   }
 
-  if (!options.isActivated.checked) { ghost(true) }
+  ghost(!options.isActivated.checked)
 
   // Set the display activation and frequency.
   options.isActivated.onchange = function () {

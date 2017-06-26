@@ -1,0 +1,46 @@
+body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  width: 500px;
+}
+
+.header img {
+  width: 20px;
+  display: inline-block;
+  margin-right: 10px;
+}
+.header h1 {
+  font-size: 20px;
+  display: inline-block;
+}
+
+.content {
+  font-size: 8px;
+  display: block;
+}
+
+.pipe a {
+  width: 100%;
+  display: block;
+  margin: 10px 0 13px 6px;
+  font-size: 11px;
+}
+.stage {
+  margin: 10px;
+  max-width: 105px;
+  display: inline-table;
+}
+
+.footer {
+  margin-top: 15px;
+}
+
+.footer.left{
+  width: 49%;
+  text-align: left;
+  display: inline-block;
+}
+.footer.right{
+  width: 49%;
+  text-align: right;
+  display: inline-block;
+}

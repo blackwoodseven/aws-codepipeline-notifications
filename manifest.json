@@ -1,8 +1,9 @@
 {
-  "name": "Pipeline Notification",
-  "version": "1.1",
+  "name": "AWS CodePipeline Notification",
   "description":
-    "This is a simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification",
+    "This is a simple plugin that checks the results of the AWS code pipeline processes and displays them as desktop notification -- NOT A PRODUCT FROM AWS ITSELF, USE AT YOUR OWN EXPENSE.",
+  "manifest_version": 2,
+  "version": "1.1",
   "icons": {"16": "img/16.png", "48": "img/48.png", "128": "img/128.png"},
   "permissions": [
     "notifications",
@@ -10,6 +11,11 @@
     "https://*/",
     "cookies"
   ],
+  "browser_action": {
+    "name": "AWS Code Pipeline Notification",
+    "default_popup": "iconPopup/index.html",
+    "default_icon": "img/48.png"
+  },
   "options_page": "options/index.html",
   "background": {
     "scripts": [
@@ -18,10 +24,11 @@
       "background/notification.js",
       "background/index.js"]
   },
-  "manifest_version": 2,
-
-  // crbug.com/134315
   "web_accessible_resources": [
-    "48.png"
+    "/img/48.png",
+    "/img/grey48.png",
+    "/img/progress.png",
+    "/img/success.png",
+    "/img/failure.png"
   ]
 }
