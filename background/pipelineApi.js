@@ -67,7 +67,6 @@ const codepipelineProxyCall = (content, target) =>
         } catch (e) {
           throw new Error('Not good json!')
         }
-        console.log(dataJson)
         return resolve(dataJson)
       })
       .catch((err) => {

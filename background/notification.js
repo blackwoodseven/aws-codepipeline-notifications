@@ -5,26 +5,31 @@ const preatyTime = () => {
   return now.getHours() + ':' + ((now.getMinutes() <= 9) ? '0' + now.getMinutes() : now.getMinutes())
 }
 
-const showNoPipesDefinedNotification = (pipelines, frequency) =>
-  chrome.notifications.create(chrome.runtime.getURL('options/index.html'), {
+const createNotification = (urlAsId, title, iconUrl, message, requireInteraction = false, priority = 0) =>
+  chrome.notifications.create(urlAsId, {
     type: 'basic',
-    title: 'Error! No pipelines to check defined..',
-    iconUrl: '../img/error.png',
-    message: `Cannot run the pipelines notification system because no pipe is defined tobe checked. Please goto the options page and set the pipes that you want to check`,
-    isClickable: false,
-    contextMessage: 'Pipeline Notification'
+    title,
+    iconUrl,
+    message,
+    isClickable: (urlAsId !== 'noLink'),
+    contextMessage: 'Pipeline Notification',
+    requireInteraction,
+    priority
   })
 
+const showNoPipesDefinedNotification = () =>
+  createNotification(
+    chrome.runtime.getURL('options/index.html'),
+    'Error! No pipelines to check defined..',
+    '../img/error.png',
+    `Cannot run the pipelines notification system because no pipe is defined tobe checked. Please goto the options page and set the pipes that you want to check`)
 
 const showExtentionStartNotification = (pipelines, frequency) =>
-  chrome.notifications.create('start', {
-    type: 'basic',
-    title: 'Pipeline Notification Start',
-    iconUrl: '../img/48.png',
-    message: `The extention has started looking for changes to the pipelines:\n${pipelines}\n @ a frequency of ${frequency} minutes.`,
-    isClickable: false,
-    contextMessage: 'Pipeline Notification'
-  })
+  createNotification(
+    'noLink',
+    'Pipeline Notification Start',
+    '../img/48.png',
+    `The extention has started looking for changes to the pipelines:\n${pipelines}\n @ a frequency of ${frequency} minutes.`)
 
 const showPipelineNotification = (pipelineName, stageName, status) => {
   var icon = ''
@@ -38,46 +43,38 @@ const showPipelineNotification = (pipelineName, stageName, status) => {
     priority = 2
   }
 
-  chrome.notifications.create(
-    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}`, {
-      type: 'basic',
-      title: `${pipelineName} - ${preatyTime()}`,
-      iconUrl: icon,
-      message: `Stage: ${stageName}\nStatus: ${status}`,
-      requireInteraction,
-      priority,
-      contextMessage: 'Pipeline Notification'
-    })
+  createNotification(
+    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}`,
+    `${pipelineName} - ${preatyTime()}`,
+    icon,
+    `Stage: ${stageName}\nStatus: ${status}`,
+    requireInteraction,
+    priority)
 }
 
 const showPipelineStructureChangeNotification = (pipelineName) =>
-  chrome.notifications.create(
-    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}`, {
-      type: 'basic',
-      title: `${pipelineName} - ${preatyTime()}`,
-      iconUrl: '../img/information.png',
-      message: `This pipeline has change structure.`,
-      contextMessage: 'Pipeline Notification'
-    })
+  createNotification(
+    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}`,
+    `${pipelineName} - ${preatyTime()}`,
+    '../img/information.png',
+    `This pipeline has change structure.`)
 
 const showLoggedOutNotification = () => {
-  chrome.notifications.create(
-    'https://console.aws.amazon.com/console/home', {
-      type: 'basic',
-      title: `Error!! - ${preatyTime()}`,
-      iconUrl: '../img/error.png',
-      message: `Cant retrive the pipeline status. Most probable because you are logged out.\nIf you are logged it is probable that AWS changed something on the responses.. you will have to debug.`,
-      contextMessage: 'Pipeline Notification'
-    })
-  openPage()
+  const url = 'https://eu-west-1.console.aws.amazon.com/codepipeline/home'
+  createNotification(
+    url,
+    `Error!! - ${preatyTime()}`,
+    '../img/error.png',
+    `Cant retrive the pipeline status. Most probable because you are logged out.\nIf you are logged it is probable that AWS changed something on the responses.. you will have to debug.`)
+  openPage(url)
 }
 
-const openPage = (urlAsNotificationId = '') => {
+const openPage = (urlAsNotificationId) => {
   if (urlAsNotificationId.indexOf('aws.amazon.com') !== -1) {
     chrome.tabs.query({url: 'https://*.aws.amazon.com/*'},
     (tabs) => {
       if (tabs.length === 0) {
-        chrome.tabs.create({url: 'https://eu-west-1.console.aws.amazon.com/codepipeline/home'})
+        chrome.tabs.create({url: urlAsNotificationId})
       } else {
         chrome.tabs.update(tabs[0].id, {active: true})
       }
@@ -88,7 +85,7 @@ const openPage = (urlAsNotificationId = '') => {
 }
 
 chrome.notifications.onClicked.addListener((urlAsNotificationId) => {
-  if (urlAsNotificationId !== 'start') {
+  if (urlAsNotificationId !== 'noLink') {
     openPage(urlAsNotificationId)
   }
 })

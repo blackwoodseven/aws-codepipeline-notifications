@@ -35,9 +35,13 @@ if (window.Notification) {
         getPipelineState(pipelineName)
         .then(newPipelineState => {
           const pipelineOldState = localStoragePipelines[pipelineName]
-          if (pipelineOldState.stageStates.length !== newPipelineState.stageStates.length) {
+          if (pipelineOldState.stageStates && pipelineOldState.stageStates.length !== newPipelineState.stageStates.length) {
             showPipelineStructureChangeNotification(pipelineName)
-          } else {
+          } else if (pipelineOldState.stageStates) {
+            // -- for debug purposes --
+            // pipelineOldState.stageStates.forEach(p => console.log(`${p.stageName} // ${p.latestExecution.status} - ${p.latestExecution.pipelineExecutionId}`))
+            // newPipelineState.stageStates.forEach(p => console.log(`${p.stageName} // ${p.latestExecution.status} - ${p.latestExecution.pipelineExecutionId}`))
+
             newPipelineState.stageStates.forEach((pipelineStageNewState, index) => {
               if (!_.isEqual(pipelineOldState.stageStates[index], pipelineStageNewState)) {
                 showPipelineNotification(pipelineName, pipelineStageNewState.stageName, pipelineStageNewState.latestExecution.status)
