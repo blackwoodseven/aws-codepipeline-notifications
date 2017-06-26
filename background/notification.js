@@ -35,7 +35,7 @@ const showExtentionStartNotification = (pipelines, frequency) =>
     '../img/48.png',
     `The extention has started looking for changes to the pipelines:\n${pipelines}\n @ a frequency of ${frequency} minutes.`)
 
-const showPipelineNotification = (pipelineName, stageName, status) => {
+const showPipelineNotification = (pipelineName, stageName, status, typeOfNotif) => {
   var icon = ''
   var requireInteraction = false
   var priority = 0
@@ -48,13 +48,20 @@ const showPipelineNotification = (pipelineName, stageName, status) => {
     priority = 2
   }
 
-  createNotification(
-    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}-${now.getTime()}`,
-    `${pipelineName} - ${preatyTime()}`,
-    icon,
-    `Stage: ${stageName}\nStatus: ${status}`,
-    requireInteraction,
-    priority)
+  if (typeOfNotif === 'all' ||
+     (typeOfNotif === 'failuresSuccesses' && (status === 'Succeeded' || status === 'Failed')) ||
+     (typeOfNotif === 'onlyFailures' && status === 'Failed')) {
+    console.info(`Notification... ${pipelineName} - ${preatyTime()} // Stage: ${stageName}\nStatus: ${status}`)
+    createNotification(
+      `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}-${now.getTime()}`,
+      `${pipelineName} - ${preatyTime()}`,
+      icon,
+      `Stage: ${stageName}\nStatus: ${status}`,
+      requireInteraction,
+      priority)
+  } else {
+    console.info(`Sillent notification... ${pipelineName} - ${preatyTime()} // Stage: ${stageName}\nStatus: ${status}`)
+  }
 }
 
 const showPipelineStructureChangeNotification = (pipelineName) =>

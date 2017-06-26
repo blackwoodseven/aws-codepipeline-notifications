@@ -14,6 +14,13 @@ window.addEventListener('load', function () {
   // Initialize the option controls.
   options.isActivated.checked = JSON.parse(localStorage.isActivated) // The display activation.
   options.frequency.value = localStorage.frequency // The display frequency, in minutes.
+  const setTypeOfNotifInput = (localStorage, options) => {
+    options.onlyFailures.checked = (localStorage.typeOfNotif === 'onlyFailures')
+    options.failuresSuccesses.checked = (localStorage.typeOfNotif === 'failuresSuccesses')
+    options.all.checked = (localStorage.typeOfNotif === 'all')
+  }
+  setTypeOfNotifInput(localStorage, options)
+
   if (localStorage.pipelines) {
     const localStoragePipelines = JSON.parse(localStorage.pipelines)
     var pipelines = ''
@@ -35,10 +42,23 @@ window.addEventListener('load', function () {
     localStorage.frequency = options.frequency.value
   }
 
+  options.onlyFailures.onchange = function () {
+    localStorage.typeOfNotif = options.onlyFailures.value
+    setTypeOfNotifInput(localStorage, options)
+  }
+  options.failuresSuccesses.onchange = function () {
+    localStorage.typeOfNotif = options.failuresSuccesses.value
+    setTypeOfNotifInput(localStorage, options)
+  }
+  options.all.onchange = function () {
+    localStorage.typeOfNotif = options.all.value
+    setTypeOfNotifInput(localStorage, options)
+  }
+
   options.pipelines.onblur = function () {
     var obj = {}
     options.pipelines.value.split(';').forEach(pipeline => {
-      if (pipeline !== '') obj[pipeline.replace(' ', '')] = {}
+      if (pipeline !== '') obj[pipeline.replace(' ', '').replace(/(\r\n|\n|\r)/gm, '')] = {}
     })
     localStorage.pipelines = JSON.stringify(obj)
   }

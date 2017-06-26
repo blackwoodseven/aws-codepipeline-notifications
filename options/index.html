@@ -18,6 +18,11 @@
       With interval do you want to check for changes (minutes)<br />
       <input type="number" name="frequency" min="1" value=5>
       <br /><br />
+      Display notification which type of stage change?<br />
+      <input type="radio" name="onlyFailures" value="onlyFailures">Only on Failures<br />
+      <input type="radio" name="failuresSuccesses" value="failuresSuccesses">Failures and Successes<br />
+      <input type="radio" name="all" value="all" checked>All - Failures, Successes and InProcess<br />
+      <br /><br />
       Insert the pipelines you want to be notified on change of state. Separate them by ;<br />
       <textarea rows="4" cols="80" name="pipelines"></textarea>
 

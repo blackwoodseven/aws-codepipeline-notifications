@@ -6,6 +6,7 @@ const backgroundFn = () => {
     localStorage.isActivated = true
     localStorage.frequency = 1        // The display frequency, in minutes.
     localStorage.pipelines = '{}'
+    localStorage.typeOfNotif = 'all'
     localStorage.isInitialized = true // The option initialization.
   }
 
@@ -16,6 +17,8 @@ const backgroundFn = () => {
         showNoPipesDefinedNotification()
       } else {
         showExtentionStartNotification(Object.keys(localStoragePipelines), localStorage.frequency)
+        console.info(`Extention Start looking for ${Object.keys(localStoragePipelines)} @ ${localStorage.frequency} min`)
+
         Object.keys(localStoragePipelines).forEach(pipelineName => {
           getPipelineState(pipelineName)
           .then(pipelineState => {
@@ -41,6 +44,7 @@ const backgroundFn = () => {
       if (JSON.parse(localStorage.isActivated) && localStorage.frequency <= interval) {
         var localStoragePipelines = JSON.parse(localStorage.pipelines)
         Object.keys(localStoragePipelines).forEach(pipelineName => {
+          console.info(`Going to get the pipeline state for ${pipelineName}`)
           new Promise((resolve) => setTimeout(resolve, 2000)) // for the fk tabs
           .then(() => getPipelineState(pipelineName))
           .then(newPipelineState => {
@@ -54,7 +58,7 @@ const backgroundFn = () => {
 
               newPipelineState.stageStates.forEach((pipelineStageNewState, index) => {
                 if (!_.isEqual(pipelineOldState.stageStates[index], pipelineStageNewState)) {
-                  showPipelineNotification(pipelineName, pipelineStageNewState.stageName, pipelineStageNewState.latestExecution.status)
+                  showPipelineNotification(pipelineName, pipelineStageNewState.stageName, pipelineStageNewState.latestExecution.status, localStorage.typeOfNotif)
                 }
               })
             }
