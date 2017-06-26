@@ -39,5 +39,4 @@ TODOS:
 BUGS:
 -----
  * Test Failure
- * Double login page opens on error if one does not exist
  * Limit manifest

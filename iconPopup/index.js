@@ -21,6 +21,7 @@ refreshAnchor.onclick = () => {
 
 var content = document.getElementById('content')
 if (JSON.parse(localStorage.isActivated)) {
+  debugger
   var localStoragePipelines = JSON.parse(localStorage.pipelines)
   if (Object.keys(localStoragePipelines).length === 0) {
     var noPipesDiv = document.createElement('div')
@@ -39,31 +40,37 @@ if (JSON.parse(localStorage.isActivated)) {
       title.onclick = () => goToTab(`https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}`)
       pipeDiv.appendChild(title)
 
-      pipe.stageStates.forEach(stage => {
-        var stageDiv = document.createElement('div')
-        stageDiv.className = 'stage'
+      if (pipe.stageStates) {
+        pipe.stageStates.forEach(stage => {
+          var stageDiv = document.createElement('div')
+          stageDiv.className = 'stage'
 
-        const stageStatus = stage.latestExecution.status
-        var stateImg = document.createElement('img')
-        if (stageStatus === 'Succeeded') stateImg.src = '../img/success.png'
-        else if (stageStatus === 'InProgress') stateImg.src = '../img/progress.png'
-        else if (stageStatus === 'Faillure') stateImg.src = '../img/failure.png'
-        stageDiv.appendChild(stateImg)
+          const stageStatus = stage.latestExecution.status
+          var stateImg = document.createElement('img')
+          if (stageStatus === 'Succeeded') stateImg.src = '../img/success.png'
+          else if (stageStatus === 'InProgress') stateImg.src = '../img/progress.png'
+          else if (stageStatus === 'Faillure') stateImg.src = '../img/failure.png'
+          stageDiv.appendChild(stateImg)
 
-        var stageNameP = document.createElement('p')
-        stageNameP.innerText = `Stage: ${stage.stageName}`
-        stageDiv.appendChild(stageNameP)
+          var stageNameP = document.createElement('p')
+          stageNameP.innerText = `Stage: ${stage.stageName}`
+          stageDiv.appendChild(stageNameP)
 
-        var stageStatusP = document.createElement('p')
-        stageStatusP.innerText = `Status: ${stageStatus}`
-        stageDiv.appendChild(stageStatusP)
+          var stageStatusP = document.createElement('p')
+          stageStatusP.innerText = `Status: ${stageStatus}`
+          stageDiv.appendChild(stageStatusP)
 
-        var latestExecutionIdP = document.createElement('p')
-        latestExecutionIdP.innerText = `ExeId: ${stage.latestExecution.pipelineExecutionId}`
-        stageDiv.appendChild(latestExecutionIdP)
+          var latestExecutionIdP = document.createElement('p')
+          latestExecutionIdP.innerText = `ExeId: ${stage.latestExecution.pipelineExecutionId}`
+          stageDiv.appendChild(latestExecutionIdP)
 
-        pipeDiv.appendChild(stageDiv)
-      })
+          pipeDiv.appendChild(stageDiv)
+        })
+      } else {
+        var errorMsg = document.createElement('p')
+        errorMsg.innerText = 'Cant retreive the stages of this pipe. Most probable is that you are logged out.'
+        pipeDiv.appendChild(errorMsg)
+      }
 
       content.appendChild(pipeDiv)
     })

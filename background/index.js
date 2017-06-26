@@ -1,4 +1,4 @@
-/* global localStorage getPipelineState showNoPipesDefinedNotification showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ */
+/* global chrome localStorage getPipelineState showNoPipesDefinedNotification showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ */
 
 const backgroundFn = () => {
   // Conditionally initialize the options.
@@ -13,17 +13,24 @@ const backgroundFn = () => {
   if (window.Notification) {
     if (JSON.parse(localStorage.isActivated)) {
       var localStoragePipelines = JSON.parse(localStorage.pipelines)
-      Object.keys(localStoragePipelines).forEach(pipelineName => {
-        getPipelineState(pipelineName)
-        .then(pipelineState => {
-          localStoragePipelines[pipelineName] = pipelineState
-          localStorage.pipelines = JSON.stringify(localStoragePipelines)
-        })
-      })
       if (Object.keys(localStoragePipelines).length === 0) {
         showNoPipesDefinedNotification()
       } else {
         showExtentionStartNotification(Object.keys(localStoragePipelines), localStorage.frequency)
+        Object.keys(localStoragePipelines).forEach(pipelineName => {
+          getPipelineState(pipelineName)
+          .then(pipelineState => {
+            // initialize the pipeline states
+            localStoragePipelines[pipelineName] = pipelineState
+            localStorage.pipelines = JSON.stringify(localStoragePipelines)
+          })
+          .catch((err) => {
+            // log error and reset the pipeline states
+            console.error(err)
+            localStoragePipelines[pipelineName] = {}
+            localStorage.pipelines = JSON.stringify(localStoragePipelines)
+          })
+        })
       }
     } else {
       chrome.browserAction.setIcon({path: 'img/48grey.png'})
@@ -35,7 +42,8 @@ const backgroundFn = () => {
       if (JSON.parse(localStorage.isActivated) && localStorage.frequency <= interval) {
         var localStoragePipelines = JSON.parse(localStorage.pipelines)
         Object.keys(localStoragePipelines).forEach(pipelineName => {
-          getPipelineState(pipelineName)
+          new Promise((resolve) => setTimeout(resolve, 2000)) // for the fk tabs
+          .then(() => getPipelineState(pipelineName))
           .then(newPipelineState => {
             const pipelineOldState = localStoragePipelines[pipelineName]
             if (pipelineOldState.stageStates && pipelineOldState.stageStates.length !== newPipelineState.stageStates.length) {
@@ -51,10 +59,16 @@ const backgroundFn = () => {
                 }
               })
             }
+            // update the pipeline states
             localStoragePipelines[pipelineName] = newPipelineState
             localStorage.pipelines = JSON.stringify(localStoragePipelines)
           })
-          .catch((err) => console.error(err))
+          .catch((err) => {
+            // log error and reset the pipeline states
+            console.error(err)
+            localStoragePipelines[pipelineName] = {}
+            localStorage.pipelines = JSON.stringify(localStoragePipelines)
+          })
         })
         interval = 0
       }
