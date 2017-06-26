@@ -38,5 +38,4 @@ TODOS:
 
 BUGS:
 -----
- * Test Failure
- * Limit manifest
+ * ...
