@@ -13,7 +13,11 @@
   ],
   "options_page": "options/index.html",
   "background": {
-    "scripts": ["misc/underscore-min.js", "misc/pipelineApi.js", "misc/notification.js", "background.js"]
+    "scripts": [
+      "background/thirdparty/underscore-min.js",
+      "background/pipelineApi.js",
+      "background/notification.js",
+      "background/index.js"]
   },
   "manifest_version": 2,
 

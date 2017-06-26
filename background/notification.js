@@ -5,6 +5,17 @@ const preatyTime = () => {
   return now.getHours() + ':' + ((now.getMinutes() <= 9) ? '0' + now.getMinutes() : now.getMinutes())
 }
 
+const showNoPipesDefinedNotification = (pipelines, frequency) =>
+  chrome.notifications.create(chrome.runtime.getURL('options/index.html'), {
+    type: 'basic',
+    title: 'Error! No pipelines to check defined..',
+    iconUrl: '../img/error.png',
+    message: `Cannot run the pipelines notification system because no pipe is defined tobe checked. Please goto the options page and set the pipes that you want to check`,
+    isClickable: false,
+    contextMessage: 'Pipeline Notification'
+  })
+
+
 const showExtentionStartNotification = (pipelines, frequency) =>
   chrome.notifications.create('start', {
     type: 'basic',
@@ -61,8 +72,9 @@ const showLoggedOutNotification = () => {
   openPage()
 }
 
-const openPage = (urlAsNotificationId = '') =>
-  chrome.tabs.query({url: 'https://*.aws.amazon.com/*'},
+const openPage = (urlAsNotificationId = '') => {
+  if (urlAsNotificationId.indexOf('aws.amazon.com') !== -1) {
+    chrome.tabs.query({url: 'https://*.aws.amazon.com/*'},
     (tabs) => {
       if (tabs.length === 0) {
         chrome.tabs.create({url: 'https://eu-west-1.console.aws.amazon.com/codepipeline/home'})
@@ -70,6 +82,10 @@ const openPage = (urlAsNotificationId = '') =>
         chrome.tabs.update(tabs[0].id, {active: true})
       }
     })
+  } else {
+    chrome.tabs.create({url: urlAsNotificationId})
+  }
+}
 
 chrome.notifications.onClicked.addListener((urlAsNotificationId) => {
   if (urlAsNotificationId !== 'start') {

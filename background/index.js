@@ -1,4 +1,4 @@
-/* global localStorage getPipelineState showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ */
+/* global localStorage getPipelineState showNoPipesDefinedNotification showPipelineNotification showExtentionStartNotification showPipelineStructureChangeNotification _ */
 
 // Conditionally initialize the options.
 if (!localStorage.isInitialized) {
@@ -12,7 +12,6 @@ if (!localStorage.isInitialized) {
 if (window.Notification) {
   if (JSON.parse(localStorage.isActivated)) {
     var localStoragePipelines = JSON.parse(localStorage.pipelines)
-    showExtentionStartNotification(Object.keys(localStoragePipelines), localStorage.frequency)
     Object.keys(localStoragePipelines).forEach(pipelineName => {
       getPipelineState(pipelineName)
       .then(pipelineState => {
@@ -20,6 +19,11 @@ if (window.Notification) {
         localStorage.pipelines = JSON.stringify(localStoragePipelines)
       })
     })
+    if (Object.keys(localStoragePipelines).length === 0) {
+      showNoPipesDefinedNotification()
+    } else {
+      showExtentionStartNotification(Object.keys(localStoragePipelines), localStorage.frequency)
+    }
   }
   var interval = 0 // The display interval, in minutes.
   setInterval(function () {
