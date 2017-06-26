@@ -1,0 +1,35 @@
+<!--
+  Copyright (c) 2012 The Chromium Authors. All rights reserved.
+  Use of this source code is governed by a BSD-style license that can be
+  found in the LICENSE file.
+
+  Brian Kennish <bkennish@chromium.org>
+
+  An option page for configuring notifications.
+-->
+<!doctype html>
+<html>
+  <head>
+    <title>AWS Pipeline Notification</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <h1>
+      <img src="/img/64.png" alt="Codepipeline Icon">
+      AWS Pipeline Deploy Notification
+    </h1>
+    <h2><b>Desription:</b> This is a super simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification</h2>
+    <h2>Options</h2>
+    <form id="options">
+      <input type="checkbox" name="isActivated" checked>
+      Display notifications for pipelines<br /><br />
+      With intervel do you want to check for changes (minutes)<br />
+      <input type="number" name="frequency" min="1" value=5>
+      <br /><br />
+      Insert the pipelines you want to be notified on change of state. Separate them by ;<br />
+      <textarea rows="4" cols="80" name="pipelines">c3-tool-be-Pipeline; c3-tool-ui-Pipeline</textarea>
+
+    </form>
+  </body>
+</html>

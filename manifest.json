@@ -1,0 +1,24 @@
+{
+  "name": "Pipeline Notification",
+  "version": "1.1",
+  "description":
+    "This is a super simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification",
+  "icons": {"16": "img/16.png", "48": "img/48.png", "128": "img/128.png"},
+  "permissions": [
+    "notifications",
+    "tabs",
+    "http://*/",
+    "https://*/",
+    "cookies"
+  ],
+  "options_page": "options/index.html",
+  "background": {
+    "scripts": ["misc/underscore-min.js", "misc/pipelineApi.js", "misc/notification.js", "background.js"]
+  },
+  "manifest_version": 2,
+
+  // crbug.com/134315
+  "web_accessible_resources": [
+    "48.png"
+  ]
+}
