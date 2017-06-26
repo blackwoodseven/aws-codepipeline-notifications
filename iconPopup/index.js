@@ -21,7 +21,6 @@ refreshAnchor.onclick = () => {
 
 var content = document.getElementById('content')
 if (JSON.parse(localStorage.isActivated)) {
-  debugger
   var localStoragePipelines = JSON.parse(localStorage.pipelines)
   if (Object.keys(localStoragePipelines).length === 0) {
     var noPipesDiv = document.createElement('div')
@@ -49,7 +48,7 @@ if (JSON.parse(localStorage.isActivated)) {
           var stateImg = document.createElement('img')
           if (stageStatus === 'Succeeded') stateImg.src = '../img/success.png'
           else if (stageStatus === 'InProgress') stateImg.src = '../img/progress.png'
-          else if (stageStatus === 'Faillure') stateImg.src = '../img/failure.png'
+          else if (stageStatus === 'Failed') stateImg.src = '../img/failure.png'
           stageDiv.appendChild(stateImg)
 
           var stageNameP = document.createElement('p')

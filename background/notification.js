@@ -36,19 +36,21 @@ const showExtentionStartNotification = (pipelines, frequency) =>
     `The extention has started looking for changes to the pipelines:\n${pipelines}\n @ a frequency of ${frequency} minutes.`)
 
 const showPipelineNotification = (pipelineName, stageName, status) => {
+  debugger
   var icon = ''
   var requireInteraction = false
   var priority = 0
+  var now = new Date()
   if (status === 'Succeeded') icon = '../img/success.png'
   else if (status === 'InProgress') icon = '../img/progress.png'
-  else if (status === 'Faillure') {
+  else if (status === 'Failed') {
     icon = '../img/failure.png'
     requireInteraction = true
     priority = 2
   }
 
   createNotification(
-    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}`,
+    `https://eu-west-1.console.aws.amazon.com/codepipeline/home?region=eu-west-1#/view/${pipelineName}?ourtoken=${stageName}-${now.getTime()}`,
     `${pipelineName} - ${preatyTime()}`,
     icon,
     `Stage: ${stageName}\nStatus: ${status}`,

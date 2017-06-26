@@ -9,7 +9,6 @@ const backgroundFn = () => {
     localStorage.isInitialized = true // The option initialization.
   }
 
-  // Test for notification support.
   if (window.Notification) {
     if (JSON.parse(localStorage.isActivated)) {
       var localStoragePipelines = JSON.parse(localStorage.pipelines)
