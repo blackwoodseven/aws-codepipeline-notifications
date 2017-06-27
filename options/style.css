@@ -23,3 +23,8 @@ h2 {
   padding: 3px 5px;
   font-size: 100%
 }
+
+.credits {
+  position: absolute;
+  bottom: 8px;
+}
