@@ -1,7 +1,6 @@
 # aws-codepipeline-notifications
 
-This is a simple plugin that checks the results of the AWS pipeline processes and displays them as desktop notification
--- NOT A PRODUCT FROM AWS, USE AT YOUR OWN EXPENSE.
+This is a chrome extension that checks the state of AWS code pipelines and displays them. When a code pipeline stage state changes desktop notifications are shown -- NOT A PRODUCT FROM AWS ITSELF, USE AT YOUR OWN EXPENSE.
 
 How to install?
 ---------------
@@ -21,6 +20,7 @@ Don't forget!
 
  * You need to be LOOGED IN to the AWS console for this plugin to work
  * You need to have VISIT ONCE a AWS code pipeline page (ex: https://eu-west-1.console.aws.amazon.com/codepipeline/home)
+ * Notification do not appear in fullscreen
 
 
 How it works?

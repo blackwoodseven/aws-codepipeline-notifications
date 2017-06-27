@@ -1,10 +1,12 @@
 body {
   font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
   width: 500px;
+  overflow: hidden;
 }
 
 .header {
   margin-bottom: 10px;
+  display: inline-block;
 }
 
 .header img {
@@ -18,12 +20,13 @@ body {
   font-size: 20px;
   position: absolute;
   top: 15px;
+  left: 70px;
 }
 
 .content {
   display: block;
   font-size: 8px;
-  max-height: 500px;
+  max-height: 490px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -53,7 +56,7 @@ body {
 }
 
 .footer.right{
-  display: inline-block;
-  text-align: right;
   width: 49%;
+  text-align: right;
+  display: inline-block;
 }

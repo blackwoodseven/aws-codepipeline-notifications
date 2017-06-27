@@ -1,7 +1,7 @@
 {
   "name": "AWS CodePipeline Notification",
   "description":
-    "This is a simple plugin that checks the results of the AWS code pipeline processes and displays them as desktop notification -- NOT A PRODUCT FROM AWS ITSELF, USE AT YOUR OWN EXPENSE.",
+    "This is a chrome extension that checks the state of AWS code pipelines and displays them. When a code pipeline stage state changes desktop notifications are shown -- NOT A PRODUCT FROM AWS ITSELF, USE AT YOUR OWN EXPENSE.",
   "manifest_version": 2,
   "version": "1.1",
   "icons": {"16": "img/16.png", "48": "img/48.png", "128": "img/128.png"},
