@@ -34,3 +34,10 @@ TODOS:
 
  * Manual goto code pipe page needed in order to start getting good responses from the AWS web api (think this is because we cannot set the origin or referrer on our http call)
  * Create package and put this as a public repo in order to others to use
+
+
+CREDITS:
+--------
+* Black Wood Seven for providing the resources and manpower https://blackwoodseven.com/
+* Icons provided http://www.flaticon.com/authors/maxim-basinski &&
+http://www.flaticon.com/authors/plainicon
