@@ -10,9 +10,9 @@ How to install?
  3. Activate "Developer mode" (should be a checkbox that is on the top right of the page)
  4. Click on the button "Load unpacked extension..." (should be under the title of the page)
  5. Locate the folder of this project on your pc and click Load
- 6. The extension should be running you can located it by finding the extension named "Pipeline notification" (probably an error message appear saying that you don't have any pipes defined)
- 7. Click on options and on the text-box that is regarding the pipes, write the names of the pipes you want the extension to look for changes
- 8. Its ready to go! If you want to test it goto the AWS code pipes page and manually release a change and you will be able to see the notifications on the top corner of your screen
+ 6. The extension should be running you can located it by finding the extension named "Pipeline notification" (probably an error message appear saying that you don't have any pipelines defined)
+ 7. Click on options and on the text-box that is regarding the pipelines's, write the names of the pipeliness you want the extension to look for changes
+ 8. Its ready to go! If you want to test it goto the AWS code pipelines page and manually release a change and you will be able to see the notifications on the top corner of your screen
 
 
 Don't forget!
