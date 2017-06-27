@@ -33,9 +33,4 @@ TODOS:
 ------
 
  * Manual goto code pipe page needed in order to start getting good responses from the AWS web api (think this is because we cannot set the origin or referrer on our http call)
- * Create package and put this as a public repo in order to others to user
-
-
-BUGS:
------
- * ...
+ * Create package and put this as a public repo in order to others to use

@@ -3,21 +3,26 @@ body {
   width: 500px;
 }
 
+.header {
+  margin-bottom: 10px;
+}
+
 .header img {
-  width: 40px;
   display: inline-block;
   margin: 10px 20px 0 6px;
+  width: 40px;
 }
+
 .header h1 {
-  font-size: 20px;
   display: inline-block;
+  font-size: 20px;
   position: absolute;
   top: 15px;
 }
 
 .content {
-  font-size: 8px;
   display: block;
+  font-size: 8px;
   max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -25,16 +30,16 @@ body {
 
 .pipe a {
   display: block;
-  padding: 0 5px 0 5px;
-  margin: 10px 0 13px;
   font-size: 11px;
+  margin: 10px 0 13px;
   outline: none;
+  padding: 0 5px 0 5px;
 }
 
 .stage {
+  display: inline-table;
   margin: 10px;
   max-width: 105px;
-  display: inline-table;
 }
 
 .footer {
@@ -42,12 +47,13 @@ body {
 }
 
 .footer.left{
-  width: 49%;
+  display: inline-block;
   text-align: left;
-  display: inline-block;
-}
-.footer.right{
   width: 49%;
-  text-align: right;
+}
+
+.footer.right{
   display: inline-block;
+  text-align: right;
+  width: 49%;
 }
